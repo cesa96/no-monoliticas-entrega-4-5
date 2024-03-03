@@ -1,0 +1,12 @@
+{
+    "nombres" : "CESAR", 
+    "apellidos" : "GARCIA",  
+    "identificacion" : "13514130", 
+    "fecha_nacimiento" : "1978-03-15",  
+    "genero" : "MASCULINO",  
+    "direccion" : "CLL",  
+    "telefono" : "310",  
+    "correo" : "cesa96@gmail.com", 
+    "tipoCliente" : "NATURAL", 
+    "sitioWeb" : "www.cesar.com"
+}

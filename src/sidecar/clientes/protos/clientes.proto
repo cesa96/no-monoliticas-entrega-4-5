@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "co.edu.uniandes.misw4406";
+option java_outer_classname = "ClientesProto";
+option objc_class_prefix = "CLI";
+
+package clientes;
+
+// ------------------------------
+// Servicios
+// ------------------------------
+
+service Clientes {
+  rpc CrearCliente (Cliente) returns (RespuestaCliente) {}
+  rpc ConsultarCliente (QueryCliente) returns (RespuestaCliente) {}
+}
+
+// ------------------------------
+// Entidades
+// ------------------------------
+
+
+message Cliente {
+    optional string id = 1;
+    optional string fecha_creacion = 2;
+    optional string fecha_actualizacion = 3;
+    optional string nombres = 4;
+    optional string apellidos = 5;
+    optional string identificacion = 6;
+    optional string fecha_nacimiento = 7;
+    optional string genero = 8;
+    optional string direccion = 9;
+    optional string telefono = 10;
+    optional string correo = 11;
+    optional string tipoCliente = 12;
+    optional string sitioWeb = 13;
+}
+
+message QueryCliente {
+    string id = 1;
+}
+
+message RespuestaCliente {
+    string mensaje = 1;
+    optional Cliente cliente = 2;
+}

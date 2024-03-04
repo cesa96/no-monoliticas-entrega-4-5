@@ -2,14 +2,14 @@ from concurrent import futures
 import logging
 
 import grpc
-from clientes.pb2py2 import clientes_pb2
-from clientes.pb2py2 import clientes_pb2_grpc
+from inquilinos.pb2py2 import inquilinos_pb2
+from inquilinos.pb2py2 import inquilinos_pb2_grpc
 
 
-from clientes.servicios.clientes import Clientes
+from inquilinos.servicios.inquilinos import Inquilinos
 
 def agregar_servicios(servidor):
-    clientes_pb2_grpc.add_ClientesServicer_to_server(Clientes(), servidor)
+    inquilinos_pb2_grpc.add_InquilinosServicer_to_server(Inquilinos(), servidor)
 
 def serve():
     port = '50051'

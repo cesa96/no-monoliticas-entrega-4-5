@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "co.edu.uniandes.misw4406";
+option java_outer_classname = "InquilinosProto";
+option objc_class_prefix = "CLI";
+
+package inquilinos;
+
+// ------------------------------
+// Servicios
+// ------------------------------
+
+service Inquilinos {
+  rpc CrearInquilino (Inquilino) returns (RespuestaInquilino) {}
+  rpc ConsultarInquilino (QueryInquilino) returns (RespuestaInquilino) {}
+  rpc AsociarPropiedad (PropiedadInquilino) returns (RespuestaInquilino) {}
+  }
+
+// ------------------------------
+// Entidades
+// ------------------------------
+
+message PropiedadInquilino {
+    optional string id_inquilino = 1;
+    optional string id_propiedad = 2;
+    optional string id = 3;
+}
+
+message Inquilino {
+    optional string id = 1;
+    optional string fecha_creacion = 2;
+    optional string fecha_actualizacion = 3;
+    optional string nombres = 4;
+    optional string apellidos = 5;
+    optional string identificacion = 6;
+    optional string fecha_nacimiento = 7;
+    optional string genero = 8;
+    optional string direccion = 9;
+    optional string telefono = 10;
+    optional string correo = 11;
+    optional string sitioWeb = 13;
+    repeated PropiedadInquilino propiedades = 14;
+}
+
+
+
+message QueryInquilino {
+    string id = 1;
+}
+
+message RespuestaInquilino {
+    string mensaje = 1;
+    optional Inquilino inquilino = 2;
+}

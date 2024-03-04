@@ -1,3 +1,4 @@
+from clientes.modulos.clientes.infraestructura.despachadores import Despachador
 import clientes.seedwork.presentacion.api as api
 import json
 from clientes.modulos.clientes.aplicacion.servicios import ServicioCliente
@@ -36,10 +37,14 @@ def clientes_asincrona():
             cliente_dto.correo,
             cliente_dto.tipoCliente,
             cliente_dto.sitioWeb)
+
+        despachador = Despachador()
+        despachador.publicar_comando(comando, 'comandos2-cliente')
+
         
         # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
         # Revise la clase Despachador de la capa de infraestructura
-        ejecutar_commando(comando)
+        #ejecutar_commando(comando)
         
         return Response('{}', status=201, mimetype='application/json')
     except ExcepcionDominio as e:

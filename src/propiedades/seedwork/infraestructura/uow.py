@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
-from clientes.seedwork.dominio.entidades import AgregacionRaiz
+from propiedades.seedwork.dominio.entidades import AgregacionRaiz
 from pydispatch import dispatcher
 
 import pickle
@@ -78,22 +78,22 @@ def is_flask():
         return False
 
 def registrar_unidad_de_trabajo(serialized_obj):
-    from clientes.config.uow import UnidadTrabajoSQLAlchemy
+    from propiedades.config.uow import UnidadTrabajoSQLAlchemy
     from flask import session
-    session['uowc'] = serialized_obj
+    session['uowp'] = serialized_obj
 
 def flask_uow():
     from flask import session
-    from clientes.config.uow import UnidadTrabajoSQLAlchemy
-    if session.get('uowc'):
+    from propiedades.config.uow import UnidadTrabajoSQLAlchemy
+    if session.get('uowp'):
 
-        if session['uowc'] is None:
-            session.pop('uowc')
+        if session['uowp'] is None:
+            session.pop('uowp')
             uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
             registrar_unidad_de_trabajo(uow_serialized)
             return uow_serialized
         else:
-            return session['uowc']
+            return session['uowp']
     else:
         uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
         registrar_unidad_de_trabajo(uow_serialized)

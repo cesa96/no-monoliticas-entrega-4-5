@@ -80,20 +80,20 @@ def is_flask():
 def registrar_unidad_de_trabajo(serialized_obj):
     from inquilinos.config.uow import UnidadTrabajoSQLAlchemy
     from flask import session
-    session['uow'] = serialized_obj
+    session['uowi'] = serialized_obj
 
 def flask_uow():
     from flask import session
     from inquilinos.config.uow import UnidadTrabajoSQLAlchemy
-    if session.get('uow'):
+    if session.get('uowi'):
 
-        if session['uow'] is None:
-            session.pop('uow')
+        if session['uowi'] is None:
+            session.pop('uowi')
             uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
             registrar_unidad_de_trabajo(uow_serialized)
             return uow_serialized
         else:
-            return session['uow']
+            return session['uowi']
     else:
         uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
         registrar_unidad_de_trabajo(uow_serialized)

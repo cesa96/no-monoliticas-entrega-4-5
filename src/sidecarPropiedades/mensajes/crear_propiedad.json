@@ -1,0 +1,14 @@
+{
+    "nombre" : "CESAR", 
+    "descripcion" : "GARCIA",  
+    "num_habitaciones" : 3, 
+    "num_banos" : 2, 
+    "fecha_construccion" : "1978-03-15",  
+    "fecha_modernizacion" : "1978-03-15",  
+    "disponible" : false,  
+    "direccion" : "CLL",  
+    "precio" : 310,  
+    "metros_cuadrados" : 150, 
+    "tipoPropiedad" : "CASA", 
+    "servicios" : "muchos"
+}

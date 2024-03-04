@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "co.edu.uniandes.misw4406";
+option java_outer_classname = "PropiedadesProto";
+option objc_class_prefix = "CLI";
+
+package propiedades;
+
+// ------------------------------
+// Servicios
+// ------------------------------
+
+service Propiedades {
+  rpc CrearPropiedad (Propiedad) returns (RespuestaPropiedad) {}
+  rpc ConsultarPropiedad (QueryPropiedad) returns (RespuestaPropiedad) {}
+}
+
+// ------------------------------
+// Entidades
+// ------------------------------
+
+
+message Propiedad {
+    optional string id = 1;
+    optional string fecha_creacion = 2;
+    optional string fecha_actualizacion = 3;
+    optional string nombre = 4;
+    optional string descripcion = 5;
+    optional int32 num_habitaciones = 6;
+    optional int32 num_banos = 7;
+    optional string fecha_construccion = 8;
+    optional string fecha_modernizacion = 9;
+    optional bool disponible = 10;
+    optional string direccion = 11;
+    optional float precio = 12;
+    optional float metros_cuadrados = 13;
+    optional string tipoPropiedad = 14;
+    optional string servicios = 15;
+}
+
+message QueryPropiedad {
+    string id = 1;
+}
+
+message RespuestaPropiedad {
+    string mensaje = 1;
+    optional Propiedad propiedad = 2;
+}

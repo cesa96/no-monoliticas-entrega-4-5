@@ -31,7 +31,7 @@ def dict_a_proto_inquilino(dict_inquilino):
 def run():
 
     print("Crear una inquilino")
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50052') as channel:
         json_file = open(f'{os.path.dirname(__file__)}/mensajes/crear_inquilino.json')
         json_dict = importar_comando_inquilino(json_file)
         inquilino = dict_a_proto_inquilino(json_dict)
@@ -42,7 +42,7 @@ def run():
     print(f'Inquilino: {response.inquilino}')
 
     print("Consultar una inquilino")
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50052') as channel:
 
         par = inquilinos_pb2.QueryInquilino(id = "32fe678b-9212-440a-a35f-740b570f7131")
         stub = inquilinos_pb2_grpc.InquilinosStub(channel)
@@ -52,7 +52,7 @@ def run():
     print(f'Inquilino: {response.inquilino}')
 
     print("Asociar propiedad")
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50052') as channel:
 
         par = inquilinos_pb2.PropiedadInquilino(id_inquilino="32fe678b-9212-440a-a35f-740b570f7131", id_propiedad="cecec011-4920-46a5-b3a9-663d0d960039")
         stub = inquilinos_pb2_grpc.InquilinosStub(channel)

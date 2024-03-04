@@ -15,7 +15,7 @@ def unix_time_millis(dt):
 class Despachador:
     def _publicar_mensaje(self, mensaje, topico, schema):
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        publicador = cliente.create_producer(topico, schema=AvroSchema(EventoClienteCreado))
+        publicador = cliente.create_producer(topico, schema=schema)
         publicador.send(mensaje)
         cliente.close()
 
@@ -31,8 +31,20 @@ class Despachador:
     def publicar_comando(self, comando, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
         payload = ComandoCrearClientePayload(
-            id_usuario=str(comando.id_usuario)
-            # agregar itinerarios
+            fecha_creacion = comando.fecha_creacion ,
+            fecha_actualizacion = comando.fecha_actualizacion ,
+            id = comando.id ,
+            nombres = comando.nombres ,
+            apellidos = comando.apellidos ,
+            identificacion = comando.identificacion ,
+            fecha_nacimiento = comando.identificacion ,
+            genero = comando.genero ,
+            direccion = comando.direccion ,
+            telefono = comando.telefono ,
+            correo = comando.correo ,
+            tipoCliente = comando.tipoCliente ,
+            sitioWeb = comando.sitioWeb 
         )
+        
         comando_integracion = ComandoCrearCliente(data=payload)
         self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearCliente))

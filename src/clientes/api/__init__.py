@@ -12,7 +12,7 @@ def registrar_handlers():
 def importar_modelos_alchemy():
     import clientes.modulos.clientes.infraestructura.dto
 
-def comenzar_consumidor():
+def comenzar_consumidor(app):
     """
     Este es un código de ejemplo. Aunque esto sea funcional puede ser un poco peligroso tener 
     threads corriendo por si solos. Mi sugerencia es en estos casos usar un verdadero manejador
@@ -27,10 +27,12 @@ def comenzar_consumidor():
     threading.Thread(target=clientes.suscribirse_a_eventos).start()
 
     # Suscripción a comandos
-    threading.Thread(target=clientes.suscribirse_a_comandos).start()
+    threading.Thread(target=clientes.suscribirse_a_comandos, args=(app,)).start()
 
 def create_app(configuracion={}):
     # Init la aplicacion de Flask
+    if os.path.exists("./uowc.pkl"):
+        os.remove("uowc.pkl")
     app = Flask(__name__, instance_relative_config=True)
     
 #    app.config['SQLALCHEMY_DATABASE_URI'] =\
@@ -57,7 +59,7 @@ def create_app(configuracion={}):
     with app.app_context():
         db.create_all()
         if not app.config.get('TESTING'):
-            comenzar_consumidor()
+            comenzar_consumidor(app)
 
      # Importa Blueprints
     from . import clientes

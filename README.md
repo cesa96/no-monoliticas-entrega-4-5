@@ -188,6 +188,12 @@ Se empleó una topología descentralizada, en la cual cada microservicio dispone
 Además, se adoptó el patrón CQRS (Command Query Responsibility Segregation), mediante el cual se segregan los comandos de las consultas. Esta estrategia no solo facilita la escalabilidad independiente, sino que también optimiza el rendimiento del sistema.
 
 ### Conclusiones
+Tras los experimentos realizados, se ha observado que la arquitectura basada en microservicios del sistema ha demostrado ser altamente modificable. La adición de un nuevo módulo que interactúa y consume información de los microservicios existentes se logró de manera eficiente y sin interrupciones significativas en el funcionamiento del sistema. Esto sugiere que la arquitectura está diseñada de manera modular y desacoplada, lo que facilita la incorporación de nuevos componentes sin afectar la integridad del sistema.
+Se ha constatado que el sistema ha demostrado una capacidad adecuada para manejar el aumento de la concurrencia de usuarios. A pesar del incremento significativo en la carga de usuarios, el sistema pudo responder debido a la arquitectura basada en eventos, y el uso de CQRS para segregar las operaciones de lectura y escritura en la base de datos, así como el escalamiento individual del servicio al tener una base de datos dedicada para cada servicio. Esto indica que la arquitectura del sistema es escalable y puede adaptarse fácilmente a cambios en el volumen de usuarios sin comprometer el rendimiento. También se ha comprobado que el sistema puede proporcionar datos uniformes a los usuarios, adaptándose a sus necesidades e intereses de manera eficiente. La implementación de patrones como sidecar, la utilización de seedworks y de objetos DTO, ha permitido que el sistema se ajuste dinámicamente a las preferencias individuales de los usuarios. Esto sugiere que el sistema es flexible y puede adaptarse a diversas situaciones y requisitos cambiantes con facilidad.
+
+### Video demostración
+
+[Video](https://uniandes-my.sharepoint.com/:v:/g/personal/aa_pereza1_uniandes_edu_co/Eb9CDIwlqEBBvFtIAsbVRyoB01ae3A7NulzdesiQry7C3Q?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=k2Sm8a)
 
 ### Actividades desarrolladas
 

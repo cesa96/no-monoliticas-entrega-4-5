@@ -9,6 +9,7 @@ class PropiedadDTO(DTO):
     id: str = field(default_factory=str)
     nombre: str = field(default_factory=str)
     descripcion: str = field(default_factory=str)
+    id_cor: str = field(default_factory=str)
     num_habitaciones: int = field(default_factory=int)
     num_banos: int = field(default_factory=int)
     fecha_construccion: str = field(default_factory=str)

@@ -23,6 +23,7 @@ class Despachador:
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
         payload = PropiedadCreadoPayload(
             id_propiedad=str(evento.id_propiedad), 
+            id_cor = str(evento.id_cor),
             fecha_creacion=int(unix_time_millis(evento.fecha_creacion))
         )
         evento_integracion = EventoPropiedadCreado(data=payload)
@@ -30,9 +31,26 @@ class Despachador:
 
     def publicar_comando(self, comando, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
+
+
+
         payload = ComandoCrearPropiedadPayload(
-            id_usuario=str(comando.id_usuario)
-            # agregar itinerarios
+                fecha_creacion=str(comando.fecha_creacion),
+                fecha_actualizacion=str(comando.fecha_actualizacion),
+                id=str(comando.id),
+                nombre=str(comando.nombre),
+                descripcion=str(comando.descripcion),
+                id_cor=str(comando.id_cor),
+                num_habitaciones=str(comando.num_habitaciones),
+                num_banos=str(comando.num_banos),
+                fecha_construccion=str(comando.fecha_construccion),
+                fecha_modernizacion=str(comando.fecha_modernizacion),
+                disponible=str(comando.disponible),
+                direccion=str(comando.direccion),
+                precio=str(comando.precio),
+                metrosCuadrados=str(comando.metrosCuadrados),
+                tipoPropiedad=str(comando.tipoPropiedad),
+                servicios=str(comando.servicios)
         )
         comando_integracion = ComandoCrearPropiedad(data=payload)
         self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearPropiedad))

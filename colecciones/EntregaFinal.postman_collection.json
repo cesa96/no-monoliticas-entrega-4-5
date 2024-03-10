@@ -1,0 +1,282 @@
+{
+	"info": {
+		"_postman_id": "0e4067cb-7554-445a-9017-dc0e496177f0",
+		"name": "EntregaFinal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24060260",
+		"_collection_link": "https://winter-crescent-655831.postman.co/workspace/no-monoliticas~affc99f5-713c-41aa-bd11-468808d83f5a/collection/24060260-0e4067cb-7554-445a-9017-dc0e496177f0?action=share&source=collection_link&creator=24060260"
+	},
+	"item": [
+		{
+			"name": "clientes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombres\" : \"CESAR\", \n    \"apellidos\" : \"GARCIA\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"tipoCliente\" : \"NATURAL\", \n    \"sitioWeb\" : \"www.cesar.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5001/clientes/clientes/8de6c062-7567-471a-af69-a401d375d786",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"clientes",
+						"clientes",
+						"8de6c062-7567-471a-af69-a401d375d786"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "propiedades",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombres\" : \"CESAR\", \n    \"apellidos\" : \"GARCIA\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"tipoCliente\" : \"NATURAL\", \n    \"sitioWeb\" : \"www.cesar.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5003/propiedades/propiedades/b77544d4-a1d3-4240-8ab2-22e83ea2fa98",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5003",
+					"path": [
+						"propiedades",
+						"propiedades",
+						"b77544d4-a1d3-4240-8ab2-22e83ea2fa98"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inquilinos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombres\" : \"CESAR\", \n    \"apellidos\" : \"GARCIA\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"tipoCliente\" : \"NATURAL\", \n    \"sitioWeb\" : \"www.cesar.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/inquilinos/inquilinos/x",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"inquilinos",
+						"inquilinos",
+						"x"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inquilinos Propiedades",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombres\" : \"CESAR\", \n    \"apellidos\" : \"GARCIA\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"tipoCliente\" : \"NATURAL\", \n    \"sitioWeb\" : \"www.cesar.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/inquilinos/inquilinos/32fe678b-9212-440a-a35f-740b570f7131/asociar_propiedad/b4cc1a79-ee4d-4f09-828b-97e0412c0555",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"inquilinos",
+						"inquilinos",
+						"32fe678b-9212-440a-a35f-740b570f7131",
+						"asociar_propiedad",
+						"b4cc1a79-ee4d-4f09-828b-97e0412c0555"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clientes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombres\" : \"CESAR 951\", \n    \"apellidos\" : \"GARCIA\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"tipoCliente\" : \"NATURAL\", \n    \"sitioWeb\" : \"www.cesar.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5001/clientes/clientes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"clientes",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "propiedades",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\" : \"CESAR\", \n    \"descripcion\" : \"GARCIA\",  \n    \"num_habitaciones\" : 3, \n    \"num_banos\" : 2, \n    \"fecha_construccion\" : \"1978-03-15\",  \n    \"fecha_modernizacion\" : \"1978-03-15\",  \n    \"disponible\" : false,  \n    \"direccion\" : \"CLL\",  \n    \"precio\" : 310,  \n    \"metros_cuadrados\" : 150, \n    \"tipoPropiedad\" : \"CASA\", \n    \"servicios\" : \"muchos\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5003/propiedades/propiedades",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5003",
+					"path": [
+						"propiedades",
+						"propiedades"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inquilinos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombres\" : \"CESAR\", \n    \"apellidos\" : \"GARCIA\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"sitioWeb\" : \"www.cesar.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5002/inquilinos/inquilinos",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5002",
+					"path": [
+						"inquilinos",
+						"inquilinos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sagas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"dataInquilino\" :{\n    \"nombres\" : \"CESAR 5\", \n    \"apellidos\" : \"GARCIA 5\",  \n    \"identificacion\" : \"13514130\", \n    \"fecha_nacimiento\" : \"1978-03-15\",  \n    \"genero\" : \"MASCULINO\",  \n    \"direccion\" : \"CLL\",  \n    \"telefono\" : \"310\",  \n    \"correo\" : \"cesa96@gmail.com\", \n    \"sitioWeb\" : \"www.cesar.com\"\n},\n\"dataPropiedad\" : {\n    \"nombre\" : \"CESAR\", \n    \"descripcion\" : \"GARCIA\",  \n    \"num_habitaciones\" : 3, \n    \"num_banos\" : 2, \n    \"fecha_construccion\" : \"1978-03-15\",  \n    \"fecha_modernizacion\" : \"1978-03-15\",  \n    \"disponible\" : false,  \n    \"direccion\" : \"CLL\",  \n    \"precio\" : 310,  \n    \"metros_cuadrados\" : 150, \n    \"tipoPropiedad\" : \"CASA\", \n    \"servicios\" : \"muchos\"\n}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5004/sagas/sagas",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5004",
+					"path": [
+						"sagas",
+						"sagas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

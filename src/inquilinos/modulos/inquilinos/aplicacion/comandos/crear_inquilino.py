@@ -22,6 +22,7 @@ class CrearInquilino(Comando):
     identificacion: str
     fecha_nacimiento: str
     genero: str
+    id_cor: str
     direccion: str
     telefono: str
     correo: str
@@ -39,6 +40,7 @@ class CrearInquilinoHandler(CrearInquilinoBaseHandler):
             ,    identificacion=comando.identificacion
             ,    fecha_nacimiento=comando.fecha_nacimiento
             ,    genero=comando.genero
+            ,    id_cor=comando.id_cor
             ,    direccion=comando.direccion
             ,    telefono=comando.telefono
             ,    correo=comando.correo

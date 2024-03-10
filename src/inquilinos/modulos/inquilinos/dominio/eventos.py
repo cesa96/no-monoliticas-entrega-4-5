@@ -8,6 +8,7 @@ from datetime import datetime
 class InquilinoCreado(EventoDominio):
     id_inquilino: uuid.UUID = None
     fecha_creacion: datetime = None
+    id_cor: str = None
     
 
 @dataclass
@@ -16,4 +17,5 @@ class PropiedadAsociada(EventoDominio):
     id_propiedad: uuid.UUID = None
     id: uuid.UUID = None
     fecha_creacion: datetime = None
+    id_cor: str = None
     

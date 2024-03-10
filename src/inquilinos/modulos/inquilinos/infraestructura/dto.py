@@ -31,6 +31,7 @@ class Inquilino(db.Model):
     identificacion = db.Column(db.String(20), nullable=True)
     fecha_nacimiento = db.Column(db.String(20), nullable=True)
     genero = db.Column(db.String(50), nullable=True)
+    id_cor = db.Column(db.String(100), nullable=True)
     direccion = db.Column(db.String(150), nullable=True)
     telefono  = db.Column(db.String(20), nullable=True)
     correo  = db.Column(db.String(150), nullable=True)

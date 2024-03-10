@@ -1,3 +1,4 @@
+from propiedades.modulos.propiedades.infraestructura.despachadores import Despachador
 import propiedades.seedwork.presentacion.api as api
 import json
 from propiedades.modulos.propiedades.aplicacion.servicios import ServicioPropiedad
@@ -22,25 +23,26 @@ def propiedades_asincrona():
         map_propiedad = MapeadorPropiedadDTOJson()
         propiedad_dto = map_propiedad.externo_a_dto(propiedad_dict)
 
+
         comando = CrearPropiedad(propiedad_dto.fecha_creacion,
             propiedad_dto.fecha_actualizacion,
             propiedad_dto.id,
             propiedad_dto.nombre,
             propiedad_dto.descripcion,
             propiedad_dto.num_habitaciones,
+            propiedad_dto.id_cor,
             propiedad_dto.num_banos,
             propiedad_dto.fecha_construccion,
             propiedad_dto.fecha_modernizacion,
             propiedad_dto.disponible,
             propiedad_dto.direccion,
             propiedad_dto.precio,
-            propiedad_dto.metrosCuadrados,
-            propiedad_dto.tipoPropiedad,
-            propiedad_dto.servicios)
-        
-        # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
-        # Revise la clase Despachador de la capa de infraestructura
-        ejecutar_commando(comando)
+            propiedad_dto.metrosCuadrados, propiedad_dto.tipoPropiedad, propiedad_dto.servicios)
+
+        despachador = Despachador()
+        despachador.publicar_comando(comando, 'comandos2-propiedad')
+
+
         
         return Response('{}', status=201, mimetype='application/json')
     except ExcepcionDominio as e:

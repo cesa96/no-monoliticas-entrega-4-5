@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+import os
 
 from propiedades.seedwork.dominio.entidades import AgregacionRaiz
 from pydispatch import dispatcher
@@ -72,6 +73,7 @@ class UnidadTrabajo(ABC):
 
 def is_flask():
     try:
+        return False
         from flask import session
         return True
     except Exception as e:
@@ -80,36 +82,57 @@ def is_flask():
 def registrar_unidad_de_trabajo(serialized_obj):
     from propiedades.config.uow import UnidadTrabajoSQLAlchemy
     from flask import session
-    session['uowp'] = serialized_obj
+    if is_flask():
+        session['uowp'] = serialized_obj
+    else:
+        with open('uowp.pkl', 'wb') as outp:
+            outp.write(serialized_obj)
 
 def flask_uow():
     from flask import session
     from propiedades.config.uow import UnidadTrabajoSQLAlchemy
-    if session.get('uowp'):
+    if is_flask():
+        if session.get('uowp'):
 
-        if session['uowp'] is None:
-            session.pop('uowp')
+            if session['uowp'] is None:
+                session.pop('uowp')
+                uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
+                registrar_unidad_de_trabajo(uow_serialized)
+                return uow_serialized
+            else:
+                return session['uowp']
+        else:
             uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
             registrar_unidad_de_trabajo(uow_serialized)
             return uow_serialized
-        else:
-            return session['uowp']
     else:
-        uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
-        registrar_unidad_de_trabajo(uow_serialized)
-        return uow_serialized
+        if os.path.exists("./uowp.pkl"):
+            my_file = open("uowp.pkl", "rb")
+            uow_serialized = my_file.read()
+            my_file.close()
+            return uow_serialized
+        else:
+            with open('uowp.pkl', 'wb') as outp:
+                uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
+                outp.write(uow_serialized)
+            return uow_serialized
+
+
+
+
+
 
 def unidad_de_trabajo() -> UnidadTrabajo:
-    if is_flask():
+    #if is_flask():
         return pickle.loads(flask_uow())
-    else:
+    #else:
         raise Exception('No hay unidad de trabajo')
 
 def guardar_unidad_trabajo(uow: UnidadTrabajo):
-    if is_flask():
+    #if is_flask():
         registrar_unidad_de_trabajo(pickle.dumps(uow))
-    else:
-        raise Exception('No hay unidad de trabajo')
+    #else:
+    #    raise Exception('No hay unidad de trabajo')
 
 
 class UnidadTrabajoPuerto:

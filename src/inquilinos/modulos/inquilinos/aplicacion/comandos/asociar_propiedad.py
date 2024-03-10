@@ -16,9 +16,10 @@ from inquilinos.modulos.inquilinos.infraestructura.repositorios import Repositor
 class AsociarPropiedad(Comando):
     id_inquilino: str
     id_propiedad: str
+    id_cor: str
 
 
-class CrearInquilinoHandler(CrearInquilinoBaseHandler):
+class AsociarPropiedadHandler(CrearInquilinoBaseHandler):
     
     def handle(self, comando: AsociarPropiedad):
 
@@ -34,6 +35,6 @@ class CrearInquilinoHandler(CrearInquilinoBaseHandler):
 
 @comando.register(AsociarPropiedad)
 def ejecutar_comando_crear_inquilino(comando: AsociarPropiedad):
-    handler = CrearInquilinoHandler()
+    handler = AsociarPropiedadHandler()
     handler.handle(comando)
     

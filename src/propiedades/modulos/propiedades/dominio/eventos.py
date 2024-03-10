@@ -8,4 +8,5 @@ from datetime import datetime
 class PropiedadCreado(EventoDominio):
     id_propiedad: uuid.UUID = None
     fecha_creacion: datetime = None
+    id_cor: str = None
     

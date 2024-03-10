@@ -19,6 +19,7 @@ from propiedades.seedwork.dominio.objetos_valor import float, ObjetoValor, Codig
 class Propiedad(AgregacionRaiz):
     nombre: str = field(default=None)
     descripcion: str = field(default=None)
+    id_cor: str = field(default=None)
     num_habitaciones: int = field(default=None)
     num_banos: int = field(default=None)
     fecha_construccion: datetime = field(default=None)
@@ -33,8 +34,9 @@ class Propiedad(AgregacionRaiz):
     def crear_propiedad(self, propiedad: Propiedad):
         self.nombre= propiedad.nombre
         self.descripcion= propiedad.descripcion
+        self.id_cor= propiedad.id_cor
         self.num_habitaciones= propiedad.num_habitaciones
-        self.num_banos= propiedad.num_habitaciones
+        self.num_banos= propiedad.num_banos
         self.fecha_construccion= propiedad.fecha_construccion
         self.fecha_modernizacion= propiedad.fecha_construccion
         self.disponible= propiedad.disponible
@@ -45,5 +47,5 @@ class Propiedad(AgregacionRaiz):
         self.servicios= propiedad.servicios
         self.fecha_creacion = datetime.datetime.now()
         self.limpiar_eventos()
-        self.agregar_evento(PropiedadCreado(id_propiedad=self.id,fecha_creacion=self.fecha_creacion))
+        self.agregar_evento(PropiedadCreado(id_propiedad=self.id,id_cor=self.id_cor,fecha_creacion=self.fecha_creacion))
 

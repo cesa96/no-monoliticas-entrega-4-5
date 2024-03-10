@@ -14,6 +14,7 @@ class MapeadorPropiedadDTOJson(AppMap):
     def externo_a_dto(self, externo: dict) -> PropiedadDTO:
         propiedad_dto = PropiedadDTO(nombre= externo.get('nombre'), 
                                  descripcion = externo.get('descripcion'),
+                                 id_cor = externo.get('id_cor'),
                                  num_habitaciones = externo.get('num_habitaciones'),                                
                                  num_banos = externo.get('num_banos'),                                
                                  fecha_construccion = externo.get('fecha_construccion'),                                
@@ -54,6 +55,7 @@ class MapeadorPropiedad(RepMap):
                 id = entidad.id,
                 nombre = entidad.nombre,
                 descripcion = entidad.descripcion,
+                id_cor = entidad.id_cor,
                 num_habitaciones = entidad.num_habitaciones,
                 num_banos = entidad.num_banos,
                 fecha_construccion = entidad.fecha_construccion,
@@ -75,7 +77,7 @@ class MapeadorPropiedad(RepMap):
         propiedad = Propiedad(id=dto.id, nombre=dto.nombre,descripcion=dto.descripcion, 
                           num_habitaciones=dto.num_habitaciones, num_banos=dto.num_banos, fecha_construccion=dto.fecha_construccion, fecha_modernizacion=dto.fecha_modernizacion
                           , disponible=dto.disponible, direccion=direccion, precio=dto.precio, 
-                          metrosCuadrados=dto.metrosCuadrados, tipoPropiedad=dto.tipoPropiedad, servicios=dto.servicios)
+                          metrosCuadrados=dto.metrosCuadrados, tipoPropiedad=dto.tipoPropiedad, servicios=dto.servicios, id_cor=dto.id_cor)
         propiedad.direccion = direccion
 
         return propiedad

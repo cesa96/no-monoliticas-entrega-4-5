@@ -26,6 +26,7 @@ class MapeadorInquilino(Mapeador):
         inquilino_dto.identificacion = entidad.identificacion
         inquilino_dto.fecha_nacimiento = entidad.fecha_nacimiento
         inquilino_dto.genero = entidad.genero
+        inquilino_dto.id_cor = entidad.id_cor
         inquilino_dto.direccion = entidad.direccion.direccion
         inquilino_dto.telefono= entidad.telefono.contacto
         inquilino_dto.correo= entidad.correo.contacto
@@ -52,7 +53,7 @@ class MapeadorInquilino(Mapeador):
 
         inquilino = Inquilino(id=dto.id,  nombres=dto.nombres,apellidos=dto.apellidos, 
                           identificacion=dto.identificacion, fecha_nacimiento=dto.fecha_nacimiento, genero=dto.genero, direccion=direccion, telefono=telefono, 
-                          correo=correo, sitioWeb=dto.sitioWeb)
+                          correo=correo, sitioWeb=dto.sitioWeb, id_cor=dto.id_cor)
         inquilino.telefono = telefono
         inquilino.correo = correo
         inquilino.direccion = direccion

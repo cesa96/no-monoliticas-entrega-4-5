@@ -1,4 +1,5 @@
 from inquilinos.modulos.inquilinos.aplicacion.comandos.asociar_propiedad import AsociarPropiedad
+from inquilinos.modulos.inquilinos.infraestructura.despachadores import Despachador
 import inquilinos.seedwork.presentacion.api as api
 import json
 from inquilinos.modulos.inquilinos.aplicacion.servicios import ServicioInquilino
@@ -31,29 +32,29 @@ def inquilinos_asincrona():
             inquilino_dto.identificacion,
             inquilino_dto.fecha_nacimiento,
             inquilino_dto.genero,
+            inquilino_dto.id_cor,
             inquilino_dto.direccion,
             inquilino_dto.telefono,
             inquilino_dto.correo,
             inquilino_dto.sitioWeb)
-        
-        # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
-        # Revise la clase Despachador de la capa de infraestructura
-        ejecutar_commando(comando)
-        
+
+
+        despachador = Despachador()
+        despachador.publicar_comando(comando, 'comandos2-inquilino')
+
         return Response('{}', status=201, mimetype='application/json')
     except ExcepcionDominio as e:
         return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')
 
 
-@bp.route('/inquilinos/<id>/asociar_propiedad/<id_propiedad>', methods=('PUT',))
-def asociar_propiedad(id=None, id_propiedad=None):
+@bp.route('/inquilinos/<id>/asociar_propiedad/<id_propiedad>/saga/<id_cor>', methods=('PUT',))
+def asociar_propiedad(id=None, id_propiedad=None, id_cor=None):
     try:
 
-        comando = AsociarPropiedad(id_inquilino=id, id_propiedad=id_propiedad)
+        comando = AsociarPropiedad(id_inquilino=id, id_propiedad=id_propiedad, id_cor=id_cor)
         
-        # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
-        # Revise la clase Despachador de la capa de infraestructura
-        ejecutar_commando(comando)
+        despachador = Despachador()
+        despachador.publicar_comando(comando, 'comandos3-inquilino')
         
         return Response('{}', status=200, mimetype='application/json')
     except ExcepcionDominio as e:

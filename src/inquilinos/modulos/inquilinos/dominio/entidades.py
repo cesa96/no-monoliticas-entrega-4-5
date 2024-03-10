@@ -47,6 +47,7 @@ class Inquilino(AgregacionRaiz):
     identificacion: str = field(default=None)
     fecha_nacimiento: datetime = field(default=None)
     genero: ov.Genero = field(default=ov.Genero.MALE)
+    id_cor: str = field(default=None)
     direccion: Direccion = field(default=None)
     telefono: DatoContacto = field(default=None)
     correo: DatoContacto = field(default=None)
@@ -59,18 +60,19 @@ class Inquilino(AgregacionRaiz):
         self.identificacion= inquilino.identificacion
         self.fecha_nacimiento= inquilino.fecha_nacimiento
         self.genero= inquilino.genero
+        self.id_cor=inquilino.id_cor
         self.direccion= inquilino.direccion
         self.telefono= inquilino.telefono
         self.correo= inquilino.correo
         self.sitioWeb= inquilino.sitioWeb
         self.fecha_creacion = datetime.now()
         self.limpiar_eventos()
-        self.agregar_evento(InquilinoCreado(id_inquilino=self.id,fecha_creacion=self.fecha_creacion))
+        self.agregar_evento(InquilinoCreado(id_inquilino=self.id,fecha_creacion=self.fecha_creacion,id_cor=self.id_cor))
 
     def asociar_propiedad(self, id_propiedad:str):
         propiedadInquilino:  PropiedadInquilino = PropiedadInquilino(id=uuid.uuid4(),id_propiedad=id_propiedad)
         self.propiedades.append(propiedadInquilino)
         self.limpiar_eventos()
-        self.agregar_evento(PropiedadAsociada(id_inquilino=self.id, id_propiedad=id_propiedad, id=propiedadInquilino.id, fecha_creacion=datetime.now()))
+        self.agregar_evento(PropiedadAsociada(id_inquilino=self.id, id_propiedad=id_propiedad, id=propiedadInquilino.id, fecha_creacion=datetime.now(), id_cor=self.id_cor))
 
 

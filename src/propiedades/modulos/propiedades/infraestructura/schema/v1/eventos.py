@@ -5,6 +5,7 @@ from propiedades.seedwork.infraestructura.utils import time_millis
 
 class PropiedadCreadoPayload(Record):
     id_propiedad = String()
+    id_cor = String()
     fecha_creacion = Long()
 
 class EventoPropiedadCreado(EventoIntegracion):

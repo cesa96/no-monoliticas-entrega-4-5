@@ -18,6 +18,7 @@ class InquilinoDTO(DTO):
     identificacion: str = field(default_factory=str)
     fecha_nacimiento: str = field(default_factory=str)
     genero: str = field(default_factory=str)
+    id_cor: str = field(default_factory=str)
     direccion: str = field(default_factory=str)
     telefono: str = field(default_factory=str)
     correo: str = field(default_factory=str)

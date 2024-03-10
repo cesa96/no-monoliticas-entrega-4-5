@@ -7,7 +7,7 @@ class HandlerPropiedadIntegracion(Handler):
     @staticmethod
     def handle_propiedad_creado(evento):
         despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-propiedad')
+        despachador.publicar_evento(evento, 'eventos2-propiedad')
 
 
 

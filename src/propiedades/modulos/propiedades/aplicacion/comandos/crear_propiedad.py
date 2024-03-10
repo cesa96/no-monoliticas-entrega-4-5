@@ -19,6 +19,7 @@ class CrearPropiedad(Comando):
     id: str
     nombre: str
     descripcion: str
+    id_cor: str
     num_habitaciones: int
     num_banos: int
     fecha_construccion: str
@@ -39,6 +40,7 @@ class CrearPropiedadHandler(CrearPropiedadBaseHandler):
             ,   id=comando.id
             ,    nombre=comando.nombre
             ,    descripcion=comando.descripcion
+            ,    id_cor=comando.id_cor
             ,    num_habitaciones=comando.num_habitaciones
             ,    num_banos=comando.num_banos
             ,    fecha_construccion=comando.fecha_construccion

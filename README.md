@@ -134,3 +134,13 @@ python src/sidecarPropiedades/main.py
 
 python src/sidecarPropiedades/cliente.py 
 
+
+# Ejecutar Saga
+
+flask --app src/sagas/api run --port=5004
+
+# Colección con el llamado a las sagas
+
+EntregaFinal.postman_collection.json
+
+

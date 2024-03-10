@@ -21,6 +21,7 @@ class Propiedad(db.Model):
     nombre = db.Column(db.String(100), nullable=True)
     descripcion = db.Column(db.String(100), nullable=True)
     num_habitaciones = db.Column(db.Integer, nullable=True)
+    id_cor = db.Column(db.String(100), nullable=True)
     num_banos = db.Column(db.Integer, nullable=True)
     fecha_construccion = db.Column(db.String(20), nullable=True)
     fecha_modernizacion = db.Column(db.String(20), nullable=True)

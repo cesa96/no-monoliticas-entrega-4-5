@@ -17,6 +17,7 @@ class MapeadorInquilinoDTOJson(AppMap):
                                  identificacion = externo.get('identificacion'),                                
                                  fecha_nacimiento = externo.get('fecha_nacimiento'),                                
                                  genero = externo.get('genero'),                                
+                                 id_cor = externo.get('id_cor'),                                
                                  direccion = externo.get('direccion'),                                
                                  telefono = externo.get('telefono'),                                
                                  correo = externo.get('correo'),                                                            
@@ -59,6 +60,7 @@ class MapeadorInquilino(RepMap):
                 identificacion = entidad.identificacion,
                 fecha_nacimiento = entidad.fecha_nacimiento,
                 genero = entidad.genero,
+                id_cor = entidad.id_cor,
                 sitioWeb =entidad.sitioWeb,
                 telefono=entidad.telefono.contacto,
                 correo=entidad.correo.contacto,
@@ -76,7 +78,7 @@ class MapeadorInquilino(RepMap):
         correo = DatoContacto(None, TipoContacto.MAIL, dto.correo)
         inquilino = Inquilino(id=dto.id, nombres=dto.nombres,apellidos=dto.apellidos, 
                           identificacion=dto.identificacion, fecha_nacimiento=dto.fecha_nacimiento, genero=dto.genero, direccion=direccion, telefono=telefono, 
-                          correo=correo, sitioWeb=dto.sitioWeb)
+                          correo=correo, sitioWeb=dto.sitioWeb, id_cor=dto.id_cor)
         inquilino.telefono = telefono
         inquilino.correo = correo
         inquilino.direccion = direccion

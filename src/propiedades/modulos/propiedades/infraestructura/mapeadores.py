@@ -23,6 +23,7 @@ class MapeadorPropiedad(Mapeador):
         propiedad_dto.id = str(entidad.id)
         propiedad_dto.nombre = entidad.nombre
         propiedad_dto.descripcion = entidad.descripcion
+        propiedad_dto.id_cor = entidad.id_cor
         propiedad_dto.num_habitaciones = entidad.num_habitaciones
         propiedad_dto.num_banos = entidad.num_banos
         propiedad_dto.fecha_construccion = entidad.fecha_construccion
@@ -39,9 +40,9 @@ class MapeadorPropiedad(Mapeador):
     def dto_a_entidad(self, dto: PropiedadDTO) -> Propiedad:
         direccion  = Direccion(None, None, dto.direccion)
         propiedad = Propiedad(id=dto.id,  nombre=dto.nombre,descripcion=dto.descripcion, 
-                          num_habitaciones=dto.num_banos,num_banos=dto.num_banos,  fecha_construccion=dto.fecha_construccion, 
+                          num_habitaciones=dto.num_habitaciones,num_banos=dto.num_banos,  fecha_construccion=dto.fecha_construccion, 
                           fecha_modernizacion=dto.fecha_modernizacion, disponible=dto.disponible, direccion=direccion, precio=dto.precio, 
-                          metrosCuadrados=dto.metrosCuadrados, tipoPropiedad=dto.tipoPropiedad, servicios=dto.servicios)
+                          metrosCuadrados=dto.metrosCuadrados, tipoPropiedad=dto.tipoPropiedad, servicios=dto.servicios, id_cor=dto.id_cor)
         propiedad.direccion = direccion
         
         return propiedad

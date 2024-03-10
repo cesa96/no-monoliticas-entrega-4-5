@@ -45,7 +45,7 @@ def run():
     print("Consultar una cliente")
     with grpc.insecure_channel('localhost:50051') as channel:
 
-        par = clientes_pb2.QueryCliente(id = "cecec011-4920-46a5-b3a9-663d0d960039")
+        par = clientes_pb2.QueryCliente(id = "8de6c062-7567-471a-af69-a401d375d786")
         stub = clientes_pb2_grpc.ClientesStub(channel)
         response = stub.ConsultarCliente(par)
 

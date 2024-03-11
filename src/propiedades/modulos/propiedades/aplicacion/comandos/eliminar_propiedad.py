@@ -1,8 +1,7 @@
 import datetime
 from propiedades.modulos.propiedades.aplicacion.comandos.crear_propiedad import CrearPropiedadHandler
-from propiedades.modulos.propiedades.dominio.objetos_valor import Genero
 from propiedades.seedwork.aplicacion.comandos import Comando
-from propiedades.modulos.propiedades.aplicacion.dto import propiedadDTO
+from propiedades.modulos.propiedades.aplicacion.dto import PropiedadDTO
 from propiedades.seedwork.dominio.objetos_valor import Direccion, TipoContacto
 from .base import CrearPropiedadBaseHandler
 from dataclasses import dataclass, field

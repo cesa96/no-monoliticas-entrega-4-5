@@ -1,7 +1,7 @@
 import pulsar
 from pulsar.schema import *
 
-from inquilinos.modulos.inquilinos.infraestructura.schema.v1.eventos import EventoInquilinoCreado, InquilinoCreadoPayload, PropiedadAsociadaPayload, EventoPropiedadAsociada
+from inquilinos.modulos.inquilinos.infraestructura.schema.v1.eventos import EventoInquilinoCreado, EventoInquilinoCreadoFallo, EventoInquilinoEliminado, InquilinoCreadoFalloPayload, InquilinoCreadoPayload, InquilinoEliminadoPayload, PropiedadAsociadaPayload, EventoPropiedadAsociada
 from inquilinos.modulos.inquilinos.infraestructura.schema.v1.comandos import ComandoCrearInquilino, ComandoCrearInquilinoPayload, ComandoAsociarPropiedad, ComandoAsociarPropiedadPayload
 from inquilinos.seedwork.infraestructura import utils
 
@@ -39,6 +39,23 @@ class Despachador:
             )
             evento_integracion = EventoPropiedadAsociada(data=payload)
             self._publicar_mensaje(evento_integracion, topico, AvroSchema(EventoPropiedadAsociada))
+        if topico == 'eventos-eliminar-inquilino':
+            payload = InquilinoEliminadoPayload(
+                id_inquilino=str(evento.id_inquilino), 
+                fecha_creacion=int(unix_time_millis(evento.fecha_creacion)),
+                id_cor = str(evento.id_cor)
+            )
+            evento_integracion = EventoInquilinoEliminado(data=payload)
+            self._publicar_mensaje(evento_integracion, topico, AvroSchema(EventoInquilinoEliminado))
+    
+        if topico == 'eventos-fallo-inquilino' or topico == 'eventos-fallo-asociar':
+            payload = InquilinoCreadoFalloPayload(
+                fecha_creacion=int(unix_time_millis(evento.fecha_creacion)),
+                id_cor = str(evento.id_cor)
+            )
+            evento_integracion = EventoInquilinoCreadoFallo(data=payload)
+            self._publicar_mensaje(evento_integracion, topico, AvroSchema(InquilinoCreadoFalloPayload))
+
 
     def publicar_comando(self, comando, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando

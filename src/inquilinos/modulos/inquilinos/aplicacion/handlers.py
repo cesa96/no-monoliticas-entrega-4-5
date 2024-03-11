@@ -14,5 +14,10 @@ class HandlerInquilinoIntegracion(Handler):
         despachador = Despachador()
         despachador.publicar_evento(evento, 'eventos-asociar-propiedad3')
 
+    @staticmethod
+    def handle_inquilino_eliminado(evento):
+        despachador = Despachador()
+        despachador.publicar_evento(evento, 'eventos-eliminar-inquilino')
+
 
     

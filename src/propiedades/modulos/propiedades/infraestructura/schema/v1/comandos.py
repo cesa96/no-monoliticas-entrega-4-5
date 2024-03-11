@@ -32,3 +32,21 @@ class ComandoCrearPropiedad(ComandoIntegracion):
     service_name = String()
     data = ComandoCrearPropiedadPayload()
 
+class ComandoEliminarPropiedadPayload(Record):
+    id_inquilino= String()
+    id_cor=String()
+
+
+
+class ComandoEliminarPropiedad(ComandoIntegracion):
+    id = String(default=str(uuid.uuid4()))
+    time = Long()
+    ingestion = Long(default=time_millis())
+    specversion = String()
+    type = String()
+    datacontenttype = String()
+    service_name = String()
+    data = ComandoEliminarPropiedadPayload()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

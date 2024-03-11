@@ -51,4 +51,5 @@ class RepositorioInquilinosSQLite(RepositorioInquilinos):
 
     def eliminar(self, inquilino_id: UUID):
         # TODO
-        raise NotImplementedError
+        inquilino_dto:InquilinoDTO = db.session.query(InquilinoDTO).filter_by(id=str(inquilino_id)).one()
+        db.session.delete(inquilino_dto)

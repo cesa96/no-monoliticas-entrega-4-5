@@ -13,8 +13,8 @@ from sagas.modulos.sagas.infraestructura.despachadores import Despachador
 from sagas.modulos.sagas.infraestructura.fabricas import FabricaRepositorio
 from sagas.modulos.sagas.infraestructura.mapeadores import MapeadorSaga
 
-from sagas.modulos.sagas.infraestructura.schema.v1.eventos import EventoSagaCreado, EventoPropiedadAsociada, EventoInquilinoCreado, EventoPropiedadCreado
-from sagas.modulos.sagas.infraestructura.schema.v1.comandos import ComandoCrearInquilinoPayload, ComandoCrearSaga, ComandoCrearInquilino, ComandoAsociarPropiedadPayload
+from sagas.modulos.sagas.infraestructura.schema.v1.eventos import EventoSagaCreado, EventoPropiedadAsociada, EventoInquilinoCreado, EventoPropiedadCreado, EventoPropiedadCreadoFallo
+from sagas.modulos.sagas.infraestructura.schema.v1.comandos import ComandoCrearInquilinoPayload, ComandoCrearSaga, ComandoCrearInquilino, ComandoAsociarPropiedadPayload, ComandoEliminarInquilino, ComandoEliminarInquilinoPayload, ComandoEliminarPropiedad, ComandoEliminarPropiedadPayload
 from sagas.seedwork.aplicacion.comandos import ejecutar_commando
 from sagas.seedwork.infraestructura import utils
 from sagas.seedwork.infraestructura.uow import UnidadTrabajoPuerto
@@ -120,6 +120,108 @@ def suscribirse_a_propiedad_asociada():
         while True:
             mensaje = consumidor.receive()
             print(f'Evento recibido suscribirse_a_propiedad_asociada: {mensaje.value().data}')
+
+            consumidor.acknowledge(mensaje)     
+
+        saga.close()
+    except:
+        logging.error('ERROR: Suscribiendose al tópico de eventos!')
+        traceback.print_exc()
+        if saga:
+            saga.close()
+
+
+
+def suscribirse_a_propiedad_fallo(app):
+    saga = None
+    try:
+        saga = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
+        consumidor = saga.subscribe('eeventos-fallo-propiedad', consumer_type=_pulsar.ConsumerType.Shared,subscription_name='propiedades-fallo-sub-eventos2', schema=AvroSchema(EventoPropiedadCreadoFallo))
+
+        while True:
+            mensaje = consumidor.receive()
+
+            print(f'Evento recibido suscribirse_a_propiedad_fallo: {mensaje.value().data}')
+            eventoSaga = mensaje.value().data
+
+            consumidor.acknowledge(mensaje)     
+
+        saga.close()
+    except:
+        logging.error('ERROR: Suscribiendose al tópico de eventos!')
+        traceback.print_exc()
+        if saga:
+            saga.close()
+
+def suscribirse_a_inquilino_fallo(app):
+    saga = None
+    try:
+        saga = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
+        consumidor = saga.subscribe('eventos-fallo-inquilino', consumer_type=_pulsar.ConsumerType.Shared,subscription_name='inquilinos-fallo-sub-eventos2', schema=AvroSchema(EventoPropiedadCreadoFallo))
+
+        while True:
+            mensaje = consumidor.receive()
+
+            print(f'Evento recibido suscribirse_a_propiedad_fallo: {mensaje.value().data}')
+            eventoSaga = mensaje.value().data
+
+            with app.app_context():
+                fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
+                repositorio = fabrica_repositorio.crear_objeto(RepositorioSagas.__class__)
+                fabrica_sagas: Fabricasagas = Fabricasagas()
+                saga2 =  fabrica_sagas.crear_objeto(repositorio.obtener_por_id(eventoSaga.id_cor), MapeadorSaga())
+                
+                comando = ComandoEliminarPropiedadPayload(
+                    id_propiedad= saga2.id_propiedad,
+                    id_cor= eventoSaga.id_cor
+                )
+
+                despachador = Despachador()
+                despachador.publicar_comando(comando, 'comandos3-propiedad')
+
+            consumidor.acknowledge(mensaje)     
+
+        saga.close()
+    except:
+        logging.error('ERROR: Suscribiendose al tópico de eventos!')
+        traceback.print_exc()
+        if saga:
+            saga.close()
+
+
+def suscribirse_a_asociar_fallo(app):
+    saga = None
+    try:
+        saga = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
+        consumidor = saga.subscribe('eventos-fallo-asociar', consumer_type=_pulsar.ConsumerType.Shared,subscription_name='asociar-fallo-sub-eventos2', schema=AvroSchema(EventoPropiedadCreadoFallo))
+
+        while True:
+            mensaje = consumidor.receive()
+
+            print(f'Evento recibido suscribirse_a_asociar_fallo: {mensaje.value().data}')
+            eventoSaga = mensaje.value().data
+
+            with app.app_context():
+                fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
+                repositorio = fabrica_repositorio.crear_objeto(RepositorioSagas.__class__)
+                fabrica_sagas: Fabricasagas = Fabricasagas()
+                saga2 =  fabrica_sagas.crear_objeto(repositorio.obtener_por_id(eventoSaga.id_cor), MapeadorSaga())
+                
+                comando = ComandoEliminarPropiedadPayload(
+                    id_propiedad= saga2.id_propiedad,
+                    id_cor= eventoSaga.id_cor
+                )
+
+                despachador = Despachador()
+                despachador.publicar_comando(comando, 'comandos3-propiedad')
+
+                comando = ComandoEliminarInquilinoPayload(
+                    id_inquilino= saga2.id_inquilino,
+                    id_cor= eventoSaga.id_cor
+                )
+
+                despachador = Despachador()
+                despachador.publicar_comando(comando, 'comandos4-inquilino')
 
             consumidor.acknowledge(mensaje)     
 

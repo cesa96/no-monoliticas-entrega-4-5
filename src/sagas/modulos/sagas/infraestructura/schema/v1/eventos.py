@@ -73,3 +73,39 @@ class EventoPropiedadCreado(EventoIntegracion):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class PropiedadCreadoFalloPayload(Record):
+    id_cor = String()
+    fecha_creacion = Long()
+
+class EventoPropiedadCreadoFallo(EventoIntegracion):
+    id = String(default=str(uuid.uuid4()))
+    time = Long()
+    ingestion = Long(default=time_millis())
+    specversion = String()
+    type = String()
+    datacontenttype = String()
+    service_name = String()
+    data = PropiedadCreadoFalloPayload()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class InquilinoCreadoFalloPayload(Record):
+    id_cor = String()
+    fecha_creacion = Long()
+
+class EventoInquilinoCreadoFallo(EventoIntegracion):
+    id = String(default=str(uuid.uuid4()))
+    time = Long()
+    ingestion = Long(default=time_millis())
+    specversion = String()
+    type = String()
+    datacontenttype = String()
+    service_name = String()
+    data = InquilinoCreadoFalloPayload()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

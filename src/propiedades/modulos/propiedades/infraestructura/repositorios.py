@@ -41,5 +41,6 @@ class RepositorioPropiedadesSQLite(RepositorioPropiedades):
         raise NotImplementedError
 
     def eliminar(self, propiedad_id: UUID):
-        # TODO
+        propiedad_dto:PropiedadDTO = db.session.query(PropiedadDTO).filter_by(id=str(propiedad_id)).one()
+        db.session.delete(propiedad_dto)
         raise NotImplementedError

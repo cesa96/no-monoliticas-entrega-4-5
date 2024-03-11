@@ -2,7 +2,7 @@ import pulsar
 from pulsar.schema import *
 
 from sagas.modulos.sagas.infraestructura.schema.v1.eventos import EventoSagaCreado, SagaCreadoPayload
-from sagas.modulos.sagas.infraestructura.schema.v1.comandos import ComandoAsociarPropiedadPayload, ComandoCrearInquilinoPayload, ComandoCrearPropiedadPayload, ComandoCrearSaga, ComandoCrearSagaPayload, ComandoCrearInquilino, ComandoCrearPropiedad, ComandoAsociarPropiedad
+from sagas.modulos.sagas.infraestructura.schema.v1.comandos import ComandoAsociarPropiedadPayload, ComandoCrearInquilinoPayload, ComandoCrearPropiedadPayload, ComandoCrearSaga, ComandoCrearSagaPayload, ComandoCrearInquilino, ComandoCrearPropiedad, ComandoAsociarPropiedad, ComandoEliminarInquilino, ComandoEliminarPropiedad
 from sagas.seedwork.infraestructura import utils
 
 import datetime
@@ -89,3 +89,12 @@ class Despachador:
 
 
             self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoAsociarPropiedad))
+
+        if topico == 'comandos4-inquilino':
+            comando_integracion = ComandoEliminarInquilino(data=comando)
+            self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoEliminarInquilino))
+
+        if topico == 'comandos3-propiedad':
+            comando_integracion = ComandoEliminarPropiedad(data=comando)
+            self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoEliminarPropiedad))
+

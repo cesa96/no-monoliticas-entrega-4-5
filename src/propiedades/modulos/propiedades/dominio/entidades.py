@@ -10,7 +10,7 @@ import datetime
 import uuid
 
 import propiedades.modulos.propiedades.dominio.objetos_valor as ov
-from propiedades.modulos.propiedades.dominio.eventos import PropiedadCreado
+from propiedades.modulos.propiedades.dominio.eventos import PropiedadCreado, PropiedadEliminada
 from propiedades.seedwork.dominio.entidades import AgregacionRaiz, Entidad
 from propiedades.seedwork.dominio.objetos_valor import float, ObjetoValor, Codigo, Direccion, TipoContacto
 
@@ -49,3 +49,6 @@ class Propiedad(AgregacionRaiz):
         self.limpiar_eventos()
         self.agregar_evento(PropiedadCreado(id_propiedad=self.id,id_cor=self.id_cor,fecha_creacion=self.fecha_creacion))
 
+    def eliminar_propiedad(self):
+        self.limpiar_eventos()
+        self.agregar_evento(PropiedadEliminada(id_propiedad=self.id,fecha_eliminacion=datetime.now(),id_cor=self.id_cor))

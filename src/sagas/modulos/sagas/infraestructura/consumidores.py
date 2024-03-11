@@ -26,36 +26,37 @@ def suscribirse_a_eventos(app):
 
         while True:
             mensaje = consumidor.receive()
-
             eventoSaga = mensaje.value().data
-            with app.app_context():
-                fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
-                repositorio = fabrica_repositorio.crear_objeto(RepositorioSagas.__class__)
-                fabrica_sagas: Fabricasagas = Fabricasagas()
-                saga2 =  fabrica_sagas.crear_objeto(repositorio.obtener_por_id(eventoSaga.id_saga), MapeadorSaga())
-                propiedad = json.loads(saga2.dataPropiedad)
+            try:
+                with app.app_context():
+                    fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
+                    repositorio = fabrica_repositorio.crear_objeto(RepositorioSagas.__class__)
+                    fabrica_sagas: Fabricasagas = Fabricasagas()
+                    saga2 =  fabrica_sagas.crear_objeto(repositorio.obtener_por_id(eventoSaga.id_saga), MapeadorSaga())
+                    propiedad = json.loads(saga2.dataPropiedad)
 
 
-                comando = ComandoCrearPropiedadPayload(
-                    nombre= propiedad["nombre"],
-                    descripcion= propiedad["descripcion"],
-                    id_cor= eventoSaga.id_saga,
-                    num_habitaciones = int(propiedad["num_habitaciones"]),
-                    num_banos = int(propiedad["num_banos"]),
-                    fecha_construccion= propiedad["fecha_construccion"],
-                    fecha_modernizacion= propiedad["fecha_modernizacion"],
-                    disponible = propiedad["disponible"],
-                    direccion = propiedad["direccion"],
-                    precio = float(propiedad["precio"]),
-                    metrosCuadrados = float(propiedad["metros_cuadrados"]),
-                    tipoPropiedad= propiedad["tipoPropiedad"],
-                    servicios= propiedad["servicios"]
-                )
+                    comando = ComandoCrearPropiedadPayload(
+                        nombre= propiedad["nombre"],
+                        descripcion= propiedad["descripcion"],
+                        id_cor= eventoSaga.id_saga,
+                        num_habitaciones = int(propiedad["num_habitaciones"]),
+                        num_banos = int(propiedad["num_banos"]),
+                        fecha_construccion= propiedad["fecha_construccion"],
+                        fecha_modernizacion= propiedad["fecha_modernizacion"],
+                        disponible = propiedad["disponible"],
+                        direccion = propiedad["direccion"],
+                        precio = float(propiedad["precio"]),
+                        metrosCuadrados = float(propiedad["metros_cuadrados"]),
+                        tipoPropiedad= propiedad["tipoPropiedad"],
+                        servicios= propiedad["servicios"]
+                    )
 
-                despachador = Despachador()
-                despachador.publicar_comando(comando, 'comandos2-propiedad')
-
-
+                    despachador = Despachador()
+                    despachador.publicar_comando(comando, 'comandos2-propiedad')
+            except:
+                logging.error('ERROR: Suscribiendose al tópico de eventos!')
+                traceback.print_exc()
 
             print(f'Evento recibido: {mensaje.value().data}')
 

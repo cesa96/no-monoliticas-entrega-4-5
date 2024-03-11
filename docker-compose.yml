@@ -5,100 +5,112 @@ networks:
   sidecar:
     driver: bridge
 services:
-# Start zookeeper
-  zookeeper:
-    image: apachepulsar/pulsar:latest
-    profiles: ["pulsar"]
-    container_name: zookeeper
-    restart: on-failure
-    networks:
-      - pulsar
-    volumes:
-      - ./data/zookeeper:/pulsar/data/zookeeper
-    environment:
-      - metadataStoreUrl=zk:zookeeper:2181
-    command: >
-      bash -c "bin/apply-config-from-env.py conf/zookeeper.conf && \
-             bin/generate-zookeeper-config.sh conf/zookeeper.conf && \
-             exec bin/pulsar zookeeper"
-    healthcheck:
-      test: ["CMD", "bin/pulsar-zookeeper-ruok.sh"]
-      interval: 10s
-      timeout: 5s
-      retries: 30
+# # Start zookeeper
+#   zookeeper:
+#     image: apachepulsar/pulsar:latest
+#     profiles: ["pulsar"]
+#     container_name: zookeeper
+#     restart: on-failure
+#     networks:
+#       - pulsar
+#     volumes:
+#       - ./data/zookeeper:/pulsar/data/zookeeper
+#     environment:
+#       - metadataStoreUrl=zk:zookeeper:2181
+#     command: >
+#       bash -c "bin/apply-config-from-env.py conf/zookeeper.conf && \
+#              bin/generate-zookeeper-config.sh conf/zookeeper.conf && \
+#              exec bin/pulsar zookeeper"
+#     healthcheck:
+#       test: ["CMD", "bin/pulsar-zookeeper-ruok.sh"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 30
 
-# Init cluster metadata
-  pulsar-init:
-    container_name: pulsar-init
-    hostname: pulsar-init
-    image: apachepulsar/pulsar:latest
-    profiles: ["pulsar"]
-    networks:
-      - pulsar
-    command: >
-      bin/pulsar initialize-cluster-metadata \
-               --cluster cluster-a \
-               --zookeeper zookeeper:2181 \
-               --configuration-store zookeeper:2181 \
-               --web-service-url http://broker:8080 \
-               --broker-service-url pulsar://broker:6650
-    depends_on:
-      zookeeper:
-        condition: service_healthy
+# # Init cluster metadata
+#   pulsar-init:
+#     container_name: pulsar-init
+#     hostname: pulsar-init
+#     image: apachepulsar/pulsar:latest
+#     profiles: ["pulsar"]
+#     networks:
+#       - pulsar
+#     command: >
+#       bin/pulsar initialize-cluster-metadata \
+#                --cluster cluster-a \
+#                --zookeeper zookeeper:2181 \
+#                --configuration-store zookeeper:2181 \
+#                --web-service-url http://broker:8080 \
+#                --broker-service-url pulsar://broker:6650  \
+#                standalone
+#     depends_on:
+#       zookeeper:
+#         condition: service_healthy
+    
 
-# Start bookie
-  bookie:
-    image: apachepulsar/pulsar:latest
-    profiles: ["pulsar"]
-    container_name: bookie
-    restart: on-failure
-    networks:
-      - pulsar
-    environment:
-      - clusterName=cluster-a
-      - zkServers=zookeeper:2181
-      - metadataServiceUri=metadata-store:zk:zookeeper:2181
-    depends_on:
-      zookeeper:
-        condition: service_healthy
-      pulsar-init:
-        condition: service_completed_successfully
-  # Map the local directory to the container to avoid bookie startup failure due to insufficient container disks.
-    volumes:
-      - ./data/bookkeeper:/pulsar/data/bookkeeper
-    command: bash -c "bin/apply-config-from-env.py conf/bookkeeper.conf
-      && exec bin/pulsar bookie"
+# # Start bookie
+#   bookie:
+#     image: apachepulsar/pulsar:latest
+#     profiles: ["pulsar"]
+#     container_name: bookie
+#     restart: on-failure
+#     networks:
+#       - pulsar
+#     environment:
+#       - clusterName=cluster-a
+#       - zkServers=zookeeper:2181
+#       - metadataServiceUri=metadata-store:zk:zookeeper:2181
+#     depends_on:
+#       zookeeper:
+#         condition: service_healthy
+#       pulsar-init:
+#         condition: service_completed_successfully
+#   # Map the local directory to the container to avoid bookie startup failure due to insufficient container disks.
+#     volumes:
+#       - ./data/bookkeeper:/pulsar/data/bookkeeper
+#     command: bash -c "bin/apply-config-from-env.py conf/bookkeeper.conf
+#       && exec bin/pulsar bookie"
 
-# Start broker
+# # Start broker
+#   broker:
+#     image: apachepulsar/pulsar:latest
+#     profiles: ["pulsar"]
+#     container_name: broker
+#     hostname: broker
+#     restart: on-failure
+#     networks:
+#       - pulsar
+#     environment:
+#       - metadataStoreUrl=zk:zookeeper:2181
+#       - zookeeperServers=zookeeper:2181
+#       - clusterName=cluster-a
+#       - managedLedgerDefaultEnsembleSize=1
+#       - managedLedgerDefaultWriteQuorum=1
+#       - managedLedgerDefaultAckQuorum=1
+#       - advertisedAddress=broker
+#       - advertisedListeners=external:pulsar://127.0.0.1:6650
+#     depends_on:
+#       zookeeper:
+#         condition: service_healthy
+#       bookie:
+#         condition: service_started
+#     ports:
+#       - "6650:6650"
+#       - "8080:8080"
+#     volumes:
+#       - ./connectors/pulsar:/pulsar/connectors
+#     command: bash -c "bin/apply-config-from-env.py conf/broker.conf
+#       &&  exec bin/pulsar broker"
+
   broker:
-    image: apachepulsar/pulsar:latest
-    profiles: ["pulsar"]
-    container_name: broker
-    hostname: broker
+    image: apachepulsar/pulsar:3.2.0
+    container_name: pulsar
+    profiles: ["pulsar", "full"]
     restart: on-failure
-    networks:
-      - pulsar
-    environment:
-      - metadataStoreUrl=zk:zookeeper:2181
-      - zookeeperServers=zookeeper:2181
-      - clusterName=cluster-a
-      - managedLedgerDefaultEnsembleSize=1
-      - managedLedgerDefaultWriteQuorum=1
-      - managedLedgerDefaultAckQuorum=1
-      - advertisedAddress=broker
-      - advertisedListeners=external:pulsar://127.0.0.1:6650
-    depends_on:
-      zookeeper:
-        condition: service_healthy
-      bookie:
-        condition: service_started
     ports:
       - "6650:6650"
       - "8080:8080"
-    volumes:
-      - ./connectors/pulsar:/pulsar/connectors
-    command: bash -c "bin/apply-config-from-env.py conf/broker.conf
-      &&  exec bin/pulsar broker"
+    command: ["bin/pulsar", "standalone"]
   
   # MySQL8
   db:
@@ -119,11 +131,12 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql  
+
   # Servicios de Clientes
   clientes:
     container_name: clientes
     hostname: clientes
-    image: clientes/flask 
+    build: clientes/
     profiles: ["clientes", "monolito"]
     networks:
       - sidecar
@@ -137,12 +150,12 @@ services:
       - CLIENTES_ADDRESS=clientes
       - PULSAR_ADDRESS=broker
     ports:
-      - "5000:5000"
-  adaptador:
-    image: "clientes/adaptador"
+      - "5001:5001"
+  adaptador_clientes:
+    build: "sidecar/"
     profiles: ["clientes", "monolito"]
-    container_name: adaptador
-    hostname: adaptador
+    container_name: adaptadorClientes
+    hostname: adaptadorClientes
     depends_on:
       - clientes
     networks:
@@ -167,6 +180,7 @@ services:
       - PULSAR_ADDRESS=broker
     networks:
       - pulsar
+
   # Servicio UI
   ui:
     container_name: ui
@@ -183,3 +197,71 @@ services:
       - pulsar
     ports:
       - "5678:5678"
+
+  # Servicios de Inquilinos
+  inquilinos:
+    container_name: inquilinos
+    hostname: inquilinos
+    build: inquilinos/
+    profiles: ["inquilinos", "monolito"]
+    networks:
+      - sidecar
+      - pulsar
+    labels:
+      SidecarDiscover: "false"
+    depends_on:
+      - broker
+      - db
+    environment:
+      - INQUILINOS_ADDRESS=inquilinos
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "5002:5002"
+  adaptador_inquilinos:
+    build: "sidecarInquilinos/"
+    profiles: ["inquilinos", "monolito"]
+    container_name: adaptadorInquilinos
+    hostname: adaptadorInquilinos
+    depends_on:
+      - inquilinos
+    networks:
+      - sidecar
+    environment:
+      - INQUILINOS_ADDRESS=inquilinos
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "50052:50052"
+      
+  # Servicios de Propiedades
+  propiedades:
+    container_name: propiedades
+    hostname: propiedades
+    build: propiedades/
+    profiles: ["propiedades", "monolito"]
+    networks:
+      - sidecar
+      - pulsar
+    labels:
+      SidecarDiscover: "false"
+    depends_on:
+      - broker
+      - db
+    environment:
+      - PROPIEDADES_ADDRESS=propiedades
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "5003:5003"
+  adaptador_propiedades:
+    build: "sidecar/"
+    profiles: ["propiedades", "monolito"]
+    container_name: adaptador
+    hostname: adaptador
+    depends_on:
+      - propiedades
+    networks:
+      - sidecar
+    environment:
+      - PROPIEDADES_ADDRESS=propiedades
+      - PULSAR_ADDRESS=broker
+    ports:
+      - "50053:50053"

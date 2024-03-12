@@ -153,8 +153,17 @@ python src/sidecarPropiedades/main.py
 python src/sidecarPropiedades/cliente.py
 ```
 
-# Entrega 4
+# Ejecutar Saga
 
+```
+flask --app src/sagas/api run --port=5004
+```
+
+# Colección con el llamado a las sagas
+
+[EntregaFinal.json](https://github.com/cesa96/no-monoliticas-entrega-4-5/blob/main/colecciones/EntregaFinal.postman_collection.json)
+
+# Entrega 4
 Para esta entrega se desarrollaron tres experimentos, que nos permitieron validar los siguientes escenarios de calidad:
 
 Escenario de calidad 1: Modificabilidad:
@@ -204,14 +213,10 @@ Se ha constatado que el sistema ha demostrado una capacidad adecuada para maneja
 | Desarrollo de experimentos | César García, Jorge Cardona |
 | Análisis de resultados | Jorge Cardona, Andrés Pérez, César García |
 
-# Ejecutar Saga
+# Entrega 5
 
-flask --app src/sagas/api run --port=5004
 
-# Colección con el llamado a las sagas
-
-EntregaFinal.postman_collection.json
 
 **Nota:** *Debido a restricciones temporales y de recursos, hemos llevado a cabo este ejercicio en una sesión sincrónica de Pair Programming. Dada la considerable cantidad de contenido que requería revisión, se aprovecharon los conocimientos individuales de cada participante para maximizar la eficiencia y la calidad del trabajo realizado*
 
-# Entrega 5
+

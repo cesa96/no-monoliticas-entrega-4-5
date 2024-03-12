@@ -213,3 +213,5 @@ flask --app src/sagas/api run --port=5004
 EntregaFinal.postman_collection.json
 
 **Nota:** *Debido a restricciones temporales y de recursos, hemos llevado a cabo este ejercicio en una sesión sincrónica de Pair Programming. Dada la considerable cantidad de contenido que requería revisión, se aprovecharon los conocimientos individuales de cada participante para maximizar la eficiencia y la calidad del trabajo realizado*
+
+# Entrega 5

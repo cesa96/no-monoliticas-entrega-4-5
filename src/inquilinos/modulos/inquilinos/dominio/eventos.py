@@ -18,4 +18,15 @@ class PropiedadAsociada(EventoDominio):
     id: uuid.UUID = None
     fecha_creacion: datetime = None
     id_cor: str = None
+
+@dataclass
+class InquilinoEliminado(EventoDominio):
+    id_inquilino: uuid.UUID = None
+    fecha_eliminacion: datetime = None
+    id_cor: str = None
+    
+@dataclass
+class InquilinoCreadoFallo(EventoDominio):
+    fecha_creacion: datetime = None
+    id_cor: str = None
     

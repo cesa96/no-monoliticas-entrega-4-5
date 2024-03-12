@@ -37,6 +37,11 @@ def comenzar_consumidor(app):
 
     # Suscripción a comandos
     threading.Thread(target=trans.suscribirse_a_propiedad_asociada).start()
+    threading.Thread(target=trans.suscribirse_a_asociar_fallo, args=(app,)).start()
+    threading.Thread(target=trans.suscribirse_a_inquilino_fallo, args=(app,)).start()
+    threading.Thread(target=trans.suscribirse_a_propiedad_fallo, args=(app,)).start()
+
+
 
 def create_app(configuracion={}):
     # Init la aplicacion de Flask

@@ -10,7 +10,7 @@ from datetime import datetime
 import uuid
 
 import inquilinos.modulos.inquilinos.dominio.objetos_valor as ov
-from inquilinos.modulos.inquilinos.dominio.eventos import InquilinoCreado, PropiedadAsociada
+from inquilinos.modulos.inquilinos.dominio.eventos import InquilinoCreado, InquilinoEliminado, PropiedadAsociada
 from inquilinos.seedwork.dominio.entidades import AgregacionRaiz, Entidad
 from inquilinos.seedwork.dominio.objetos_valor import DatoContacto, ObjetoValor, Codigo, Direccion, TipoContacto
 
@@ -76,3 +76,7 @@ class Inquilino(AgregacionRaiz):
         self.agregar_evento(PropiedadAsociada(id_inquilino=self.id, id_propiedad=id_propiedad, id=propiedadInquilino.id, fecha_creacion=datetime.now(), id_cor=self.id_cor))
 
 
+    def eliminar_inquilino(self):
+        self.limpiar_eventos()
+        self.agregar_evento(InquilinoEliminado(id_inquilino=self.id,fecha_eliminacion=datetime.now(),id_cor=self.id_cor))
+        

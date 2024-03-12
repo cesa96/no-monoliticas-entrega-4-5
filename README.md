@@ -215,6 +215,7 @@ Se ha constatado que el sistema ha demostrado una capacidad adecuada para maneja
 
 # Entrega 5
 
+Se implemento un diseño de sagas con los 3 servicios pero en el caso desarrollado solo se relacionan propiedades e inquilinos mediante orquestación presentando de manera evidente el proceso, tanto en transacciones exitosas como en aquellas con fallos que requieran compensación.
 
 
 **Nota:** *Debido a restricciones temporales y de recursos, hemos llevado a cabo este ejercicio en una sesión sincrónica de Pair Programming. Dada la considerable cantidad de contenido que requería revisión, se aprovecharon los conocimientos individuales de cada participante para maximizar la eficiencia y la calidad del trabajo realizado*
